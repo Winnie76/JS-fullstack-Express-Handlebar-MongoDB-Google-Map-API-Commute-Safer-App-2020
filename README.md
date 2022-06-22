@@ -1,4 +1,4 @@
-# FINAL DELIVERABLE
+# Documentation
 
 
 The "Commute Safer" app owns three core functionalities: safety tips, Pin/marker for bad locations & route planning and user registrations/login.
