@@ -1,0 +1,22 @@
+
+<h1 id="profile_h1">Your Profile</h1>
+{{!-- provide user profile --}}
+    {{#if currentUser.username}}
+    <div id="profile">
+        <div><h2>Your Username: {{ currentUser.username}}<h2></div>
+        <div><h2>Your Email Address: {{ currentUser.email}}</h2></div>
+       
+        <img id="user_img" style="margin-left:26%;" alt="people" src ="/image/tip3.png">
+    </div> 
+        <a href="/user/deleteUsers" class="btn-btn-danger">
+                <button id="otherButton"  style="color:white"  >Delete Your Account</button>
+        </a>
+
+        <a href="/user/updateUsers" class="btn-btn-danger">
+                <button id="otherButton"  style="color:white"  >Update Your Account</button>
+        </a>
+    {{else}}
+        
+    {{/if}} 
+</div>
+

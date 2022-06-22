@@ -1,0 +1,27 @@
+
+<h1>email or password incorrect, please try again!</h1>
+<section class="update">
+    {{!-- update user information --}}
+    <form action="/user/update" method="post">
+        <div class="input">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="same as you registered">
+    </div>
+
+    <div class="input">     
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="change to what you like!">
+    </div>
+    <div class="input">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="same as you registered">
+    </div>
+        
+        <button id="otherButton" style="color:white"  type="submit">Update!</button>
+    </form>
+    <div>
+    <a href="/">back to homepage</a>
+    </div>
+</section>
+
+<img id="user_img" alt="people" src ="/image/tip3.png">

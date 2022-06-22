@@ -1,0 +1,27 @@
+<h1>Delete Unsafe Pin</h1>
+<section class="delete">
+    {{!-- enter information --}}
+    <form action="/pin/deletePin" method="post">
+        <div class="input">
+            <label for="email">please enter the email you used!</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="input">
+            <label for="lat">please enter the correct lat of your marker!</label>
+            <input type="number" step="any" min="-90" max="90" id="lat" name="lat" placeholder="float number">
+        </div>
+        <div class="input">
+            <label for="lng">please enter the correct lng of your marker!</label>
+            <input type="number" step="any" min="-180" max="180" id="lng" name="lng" placeholder="float number">
+        </div>
+        <div>
+            <button id="otherButton" style="color:white"  type="submit">Delete!</button>
+            <a href="/pin/getPins" class="btn-btn-danger">
+            <button id="otherButton" style="color:white"  >Back To All Pins Page</button>
+            </a>
+        </div>
+    </form>
+    <div>
+        <a href="/">back to homepage</a>
+    </div>
+</section>

@@ -1,0 +1,38 @@
+<h3 id="hooray">
+    Hooray! Here's our safety tips!
+</h3>
+<a href="/tip" class="myButton">
+        <i class="fa fa-plus"> </i> Create New Tip
+</a>
+{{!-- show all tips --}}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tips</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>
+                    <p style="margin-left: 60%; margin-top:10px;">by user <b> {{this.username}}</b></p>
+                    <p class = "tip-content">{{this.name}}</p>
+                </td>
+
+                <td>
+                    <a href="/tip/{{this._id}}">
+                        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                    </a>
+                    <a href="/tip/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this tip?');">
+                        <i class="fa fa-trash fa-lg" aria-hidden="true">
+                        </i>
+                    </a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+<div>
+<a href="/">back to homepage</a>
+</div>

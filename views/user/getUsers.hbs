@@ -1,0 +1,21 @@
+
+<h1>Get Users</h1>
+{{!-- get all user information --}}
+<section class="get">
+    <div>
+        {{# each items }}
+            <article class="item">
+                <div>ID: {{ this._id }}</div>
+                <div>Username: {{ this.username }}</div>
+                <div>Email: {{ this.email }}</div>
+                <div>Password: {{ this.password }}</div>
+                
+            </article>
+        {{/each}}
+    </div>
+    <div>
+    <a href="/">back to homepage</a>
+    </div>
+</section>
+
+<img id="user_img" alt="people" src ="/image/tip3.png">

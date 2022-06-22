@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{!-- link to all stylesheets used --}}
+    <meta name="viewport" content="width=device-width">
+    <title>Commute Safer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/user.css">
+    <link rel="stylesheet" href="/stylesheets/tip.css">
+    <link type="text/css" rel="stylesheet" href="stylesheets/animate.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    {{!-- navigation bar for all pages --}}
+    <div id="container">
+        <div id="header">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">COMMUTE SAFER</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/user/login">User<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/user/register">register</a></li>
+                                <li><a href="/user/login">login</a></li>
+                                <li><a href="/user/updateUsers">update</a></li>
+                                <li><a href="/user/deleteUsers">delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/tip/list">Tips<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/tip">write tips</a></li>
+                                <li><a href="/tip/list">view all tips</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/pin">Pins<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/pin/getPins">get all pins</a></li>
+                                <li><a href="/pin/registerPins">add unsafe pins on map</a></li>
+                                <li><a href="/pin/updatePins">update pins</a></li>
+                                <li><a href="/pin/deletePins">delete pins</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    {{#if currentUser.username}}
+                            <li><a href="/user/profile"><span class="glyphicon glyphicon-user"></span>{{ currentUser.username}}'s Profile</a></li>
+                            <li><a href="/user/logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+                            
+                        {{else}}
+                            <li><a href="/user/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+                            <li><a href="/user/register"><span class="glyphicon glyphicon-log-in"></span>Sign Up</a></li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+    {{!-- body from other pages using this layout --}}
+    <div id="main">
+    {{{ body }}}
+    </div>    
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/map.css">
+</head>
+<h1>Melbourne Map and Route Planning with Unsafe Pins</h1>
+<div id="map" ></div>
+<h5><b>!!please click the map to get lat and lng you wanna enter!!</b></h5>
+<section class="insert">
+    {{!-- enter pin information --}}
+    <form action="/pin/insertPin" method="post">
+        <div class="input" style="float:left; width: 50%;" >
+            <label for="lat">please enter the lat of your marker!</label>
+            <input style="width: 98%;" type="number" step="any" min="-90" max="90" id="lat" name="lat" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input" style="float:left; width: 50%;">
+            <label for="email">please enter the email you wanna use!</label>
+            <input style="width: 98%;" type="email" id="email" name="email">
+        </div>
+        <div class="input" style="float:left; width: 50%;">
+            <label for="lng">please enter the lng of your marker!</label>
+            <input style="width: 98%;" type="number" step="any" min="-180" max="180" id="lng" name="lng" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input" style="float:left; width: 50%;" >
+            <label for="comment">please enter the comment of your marker!</label>
+            <input style="width: 98%;" type="text" id="comment" name="comment" placeholder="please don't include '' , better to be plain words !">
+        </div>
+        <button id="otherButton" style="color:white"  type="submit">Add Unsafe Pin On Map!</button>
+    </form>
+</section>
+
+<section class="get">
+      
+    <a href="/pin/updatePins" class="myButton">update pins</a>
+        
+    <a href="/pin/deletePins" class="myButton">delete pins</a>
+    
+    <a href="/pin/registerPins" class="myButton">add unsafe pins on map</a>
+    
+</section>
+
+<div style="display: none">
+    <input id="origin-input" class="controls" type="text"
+        placeholder="Enter an origin location">
+
+    <input id="destination-input" class="controls" type="text"
+        placeholder="Enter a destination location">
+
+    <div id="mode-selector" class="controls">
+        <input type="radio" name="type" id="changemode-walking" checked="checked">
+        <label for="changemode-walking">Walking</label>
+
+        <input type="radio" name="type" id="changemode-transit">
+        <label for="changemode-transit">Transit</label>
+
+        <input type="radio" name="type" id="changemode-driving">
+        <label for="changemode-driving">Driving</label>
+    </div>
+</div>
+
+<div id="map"></div>
+<div id="infowindow-content">
+    <img src="" width="16" height="16" id="place-icon">
+    <span id="place-name"  class="title"></span><br>
+    <span id="place-address"></span>
+</div>
+
+<script>
+  function initMap() {
+    var melbourne= {lat: -37.8136, lng:144.9631};
+    var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 8,
+        center: melbourne,
+        scrollwheel: false
+    });
+
+    // load lat, lng and comment about markers from mongodb database
+    {{#loadmarkers items}} {{/loadmarkers}}
+
+    //show the lat and lng of the location when user click on the map
+    map.addListener('click', function(mapsMouseEvent) {
+        // Close the current InfoWindow.
+        //infoWindow.close();
+
+        // Create a new InfoWindow.
+        infoWindow = new google.maps.InfoWindow({content: 'Latitude: ' + mapsMouseEvent.latLng.lat() +
+    '<br>Longitude: ' + mapsMouseEvent.latLng.lng(), position: mapsMouseEvent.latLng});
+        //infoWindow.setContent(mapsMouseEvent.latLng.toString());
+        infoWindow.open(map);
+    });
+
+    new AutocompleteDirectionsHandler(map);
+  }
+
+  //add marker based on the lat and lng load from database and 
+  //show the comment about the marker when user click on the marker
+  function addMarker(location, map, comment){
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map
+        });
+      var infowindow = new google.maps.InfoWindow({
+        content: comment
+        });
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+  }
+
+  function AutocompleteDirectionsHandler(map) {
+    this.map = map;
+    this.originPlaceId = null;
+    this.destinationPlaceId = null;
+    this.travelMode = 'WALKING';
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsRenderer = new google.maps.DirectionsRenderer;
+    this.directionsRenderer.setMap(map);
+
+    var originInput = document.getElementById('origin-input');
+    var destinationInput = document.getElementById('destination-input');
+    var modeSelector = document.getElementById('mode-selector');
+
+    var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+    // Specify just the place data fields that you need.
+    originAutocomplete.setFields(['place_id', 'geometry']);
+
+    var destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
+    // Specify just the place data fields that you need.
+    destinationAutocomplete.setFields(['place_id', 'geometry']);
+
+    this.setupClickListener('changemode-walking', 'WALKING');
+    this.setupClickListener('changemode-transit', 'TRANSIT');
+    this.setupClickListener('changemode-driving', 'DRIVING');
+
+    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+    this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(modeSelector);
+    }
+
+// Sets a listener on a radio button to change the filter type on Places
+// Autocomplete.
+    AutocompleteDirectionsHandler.prototype.setupClickListener = function(
+        id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+
+        radioButton.addEventListener('click', function() {
+            me.travelMode = mode;
+            me.route();
+        });
+    };
+
+    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(
+        autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+        var marker = new google.maps.Marker({map: this.map});
+
+        autocomplete.addListener('place_changed', function() {
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+           
+            
+
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                me.map.fitBounds(place.geometry.viewport);
+            } else {
+                me.map.setCenter(place.geometry.location);
+                me.map.setZoom(17);  // Why 17? Because it looks good.
+            }
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            if (!place.place_id) {
+                window.alert('Please select an option from the dropdown list.');
+                return;
+            }
+            if (mode === 'ORIG') {
+                me.originPlaceId = place.place_id;
+            } else {
+                me.destinationPlaceId = place.place_id;
+            }
+                me.route();
+        });
+    };
+
+    AutocompleteDirectionsHandler.prototype.route = function() {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+            return;
+        }
+        var me = this;
+
+        this.directionsService.route(
+            {
+                origin: {'placeId': this.originPlaceId},
+                destination: {'placeId': this.destinationPlaceId},
+                travelMode: this.travelMode
+            },
+        function(response, status) {
+            if (status === 'OK') {
+            me.directionsRenderer.setDirections(response);
+            } else {
+            window.alert('Directions request failed due to ' + status);
+            }
+        });
+    };
+
+  google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAczKgYPfjCKFHwreJWaw47_6b6gr3w77k&libraries=places&callback=initMap"
+        async defer></script>

@@ -1,0 +1,26 @@
+<h3><b>{{viewTitle}}</b></h3>
+<div>
+<section>
+<form action="/tip" method="post">
+{{!-- autocomplete="off" --}}
+     <input type="hidden" name="_id" value="{{tip._id}}">
+        <div id="contri_tip">
+            <textarea type="String" class="form-control" name="name" value="{{tip.name}}" placeholder="Write Safety Tips Here"></textarea>
+        </div>
+        {{!-- <label>Write the username you wanna display below</label> --}}
+        <div id="contri_tip">
+            <input for="username" type="String" style="height:30px;max-width:80%;" class="form-control" name="username" value="{{tip.username}}" placeholder="Write the username you wanna display"></input>
+        </div>
+        <div class="form-group">
+            <button id="otherButton" type="submit" style="color:white">Submit</button>
+            <a href="/tip/list" class="btn-btn-danger">
+                <button id="otherButton" style="color:white"  >View All Tips</button>
+            </a>
+        </div>
+</form>
+
+<a href="/">back to homepage</a>
+
+</section>
+</div>
+<img id="tip_img" alt="people" src ="/image/tip2.png">

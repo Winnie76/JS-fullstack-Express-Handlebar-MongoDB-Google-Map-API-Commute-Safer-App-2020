@@ -1,0 +1,29 @@
+<h1>Add Unsafe Pin On Map</h1>
+<section class="insert">
+    {{!-- enter pin information --}}
+    <form action="/pin/insertPin" method="post">
+        <div class="input">
+            <label for="email">please enter the email you wanna use!</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="input">
+            <label for="lat">please enter the lat of your marker!</label>
+            <input type="number" step="any" min="-90" max="90" id="lat" name="lat" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input">
+            <label for="lng">please enter the lng of your marker!</label>
+            <input type="number" step="any" min="-180" max="180" id="lng" name="lng" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input">
+            <label for="comment">please enter the comment of your marker!</label>
+            <input type="text" id="comment" name="comment" placeholder="please don't include '' , better to be plain words !">
+        </div>
+        <button id="otherButton" style="color:white"  type="submit">Register!</button>
+        <a href="/pin/getPins" class="btn-btn-danger">
+                <button id="otherButton"  style="color:white"  >Back To All Pins Page</button>
+        </a>
+    </form>
+    <div>
+    <a href="/">back to homepage</a>
+    </div>
+</section>

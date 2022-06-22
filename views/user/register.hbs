@@ -1,0 +1,21 @@
+
+<h1>Sign Up</h1>
+{{!-- enter user information --}}
+<form action="/user/register" method="post">
+    <div class="input">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" >
+    </div>
+
+    <div class="input">     
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" >
+    </div>
+    <div class="input">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="at lease 1 Capital letter and 5 number  Length longer than 8" >
+    </div>
+    <button id="otherButton" style="color:white"  type="submit" >Register!</button>
+</form>
+
+<img id="user_img" alt="people" src ="/image/tip3.png">

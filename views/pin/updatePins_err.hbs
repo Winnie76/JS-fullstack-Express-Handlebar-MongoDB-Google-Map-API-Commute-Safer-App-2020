@@ -1,0 +1,29 @@
+<h1>wrong email or lat or lng entered, try again please</h1>
+<section class="update">
+    {{!-- update pin information --}}
+    <form action="/pin/updatePin" method="post">
+        <div class="input">
+            <label for="email">please enter the correct email you used!</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="input">
+            <label for="lat">please enter the correct lat of your marker!</label>
+            <input type="number" step="any" min="-90" max="90" id="lat" name="lat" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input">
+            <label for="lng">please enter the correct lng of your marker!</label>
+            <input type="number" step="any" min="-180" max="180" id="lng" name="lng" placeholder="float number , no xx.0 or integer">
+        </div>
+        <div class="input">
+            <label for="comment">please enter the new comment of your marker!</label>
+            <input type="text" id="comment" name="comment" placeholder="please don't include '' , better to be plain words !">
+        </div>
+        <button id="otherButton" style="color:white"  type="submit">Update!</button>
+        <a href="/pin/getPins" class="btn-btn-danger">
+                <button id="otherButton"  style="color:white"  >Back To All Pins Page</button>
+        </a>
+    </form>
+    <div>
+    <a href="/">back to homepage</a>
+    </div>
+</section>

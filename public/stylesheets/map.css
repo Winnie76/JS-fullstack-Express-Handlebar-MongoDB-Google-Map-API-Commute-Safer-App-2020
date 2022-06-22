@@ -1,0 +1,64 @@
+
+#map{
+	height:400px;
+	width:100%;
+}
+
+#origin-input{
+    width: 10px;
+    margin-left:0px;
+}
+
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#origin-input,
+#destination-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 200;
+  margin-left: 0px;
+  padding: 0 5px 0 5px;
+  text-overflow: ellipsis;
+  width: 100px;
+}
+
+#origin-input:focus,
+#destination-input:focus {
+  border-color: #4d90fe;
+}
+
+#mode-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  width:5%;
+  min-height:175px;
+  padding: 0px 0px 0px 0px;
+  margin-top: -3px;
+  margin-right: 4px;
+}
+
+#mode-selector label {
+    /* font-family: Roboto; */
+    font-size: 6px;
+    font-weight: bold;
+    /* width:20px; */
+    color:white;
+    
+  }
+
+#mode-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
